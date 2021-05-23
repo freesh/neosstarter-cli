@@ -14,12 +14,15 @@ composer create-project neos/neos-base-distribution $project_name
 cd $project_name
 
 # remove unused neos packages
-echo "remove unused neos/demo"
-composer remove neos/demo
+echo "update composer dependencies"
+composer --no-update remove neos/demo
 
 # install dev packages
-composer require deployer/deployer sitegeist/magicwand --dev
-composer require sitegeist/klarschiff sitegeist/lazybones sitegeist/monocle
+composer --no-update --dev require deployer/deployer sitegeist/magicwand
+composer --no-update require sitegeist/klarschiff sitegeist/lazybones sitegeist/monocle
+
+# process updates
+composer update
 
 # download templates
 echo "# create ./docker-compose.yml"
