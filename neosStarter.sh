@@ -27,10 +27,18 @@ composer update
 # download templates
 echo "# create ./docker-compose.yml"
 curl --create-dirs -o ./docker-compose.yaml https://raw.githubusercontent.com/freesh/neosstarter-templates/main/Templates/docker-compose.yaml
+echo "# create deployer configs"
+curl --create-dirs -o ./hosts.yml https://raw.githubusercontent.com/freesh/neosstarter-templates/main/Templates/hosts.yaml
+curl --create-dirs -o ./deploy.php https://raw.githubusercontent.com/freesh/neosstarter-templates/main/Templates/deploy.php
 echo "# create ./Configuration/Development/Docker/mysql.cnf"
 curl --create-dirs -o ./Configuration/Development/Docker/mysql.cnf https://raw.githubusercontent.com/freesh/neosstarter-templates/main/Templates/Configuration/Development/Docker/mysql.cnf
 echo "# create ./Configuration/Development/Docker/Settings.yaml"
 curl --create-dirs -o ./Configuration/Development/Docker/Settings.yaml https://raw.githubusercontent.com/freesh/neosstarter-templates/main/Templates/Configuration/Development/Docker/Settings.yaml
+
+# update composer.json
+composer config --json scripts.deploy:development 'bin/dep development'
+composer config --json scripts.deploy:staging 'bin/dep staging'
+composer config --json scripts.deploy:production 'bin/dep production'
 
 # start docker
 echo "# start docker"
